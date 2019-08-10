@@ -1,0 +1,14 @@
+proof of concept for freezing perl6 modules
+
+expected output:
+
+    $ make
+    cat freeze.p6 test.p6 | perl6 -Ilib -
+    freezing Test:auth<perl>:ver<6.d>
+    freezing Foo:auth<?>:ver<?>
+    freezing Foo::Baz:auth<?>:ver<?>
+    freezing Foo::Bar:auth<?>:ver<?>
+    cat jail.p6 test.p6 | perl6 -
+    foo
+    bar
+    ok 1 -
