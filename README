@@ -8,7 +8,8 @@ expected output:
     freezing Foo:auth<?>:ver<?>
     freezing Foo::Baz:auth<?>:ver<?>
     freezing Foo::Bar:auth<?>:ver<?>
-    cat jail.p6 test.p6 | perl6 -
+    perl6 --target=mbc --output=store.moarvm store.pm
+    cat load.p6 test.p6 | perl6 -
     foo
     bar
     ok 1 -
