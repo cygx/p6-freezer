@@ -5,4 +5,4 @@ test:
 log:
 	cat logger.p6 test.p6 | perl6 -Ilib -
 
-clean:; rm -rf *.moarvm
+clean:; rm -rf *.moarvm lib/.precomp
