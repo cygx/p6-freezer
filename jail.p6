@@ -20,8 +20,6 @@ BEGIN PROCESS::<$REPO> := (my class CompUnit::Repository::Jail
         { make $0>>.made.join }
     }
 
-    has %!loaded;
-
     has %!units = {}.push: $DIR.dir(test => /\.moarvm$/)>>.basename.map: {
         if /^ [ 'no-auth' | 'auth-' <auth=&encoded> ]
               '.' <name=&encoded>
@@ -35,7 +33,8 @@ BEGIN PROCESS::<$REPO> := (my class CompUnit::Repository::Jail
                 auth => $<auth>.made // Str,
                 repo => self,
                 repo-id => $_,
-                precompiled => True;
+                precompiled => True,
+                handle => CompUnit::Loader.load-precompilation-file($DIR.add($_));
         }
     }
 
@@ -44,10 +43,8 @@ BEGIN PROCESS::<$REPO> := (my class CompUnit::Repository::Jail
                 --> CompUnit:D) {
 
         with %!units{$spec.short-name} {
-            my $unit = .head; # TODO
-            my $id = $unit.repo-id;
-            return %!loaded{$id} //= $unit.clone: handle => 
-                CompUnit::Loader.load-precompilation-file($DIR.add($id));
+            # TODO: check ver/auth
+            return .head;
         }
 
         X::CompUnit::UnsatisfiedDependency.new(:specification($spec)).throw
@@ -61,7 +58,7 @@ BEGIN PROCESS::<$REPO> := (my class CompUnit::Repository::Jail
         X::NYI.new(feature => "loading modules by path").throw;
     }
 
-    method loaded { %!loaded.values }
+    method loaded { %!units.values }
     method id(--> "jail") {}
     method repo-chain { (self, ) }
     method path-spec { self.id ~ '#' ~ $DIR.absolute }
