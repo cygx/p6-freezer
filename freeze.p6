@@ -76,7 +76,7 @@ INIT {
 
     .&process for roots;
     for %units.kv -> $path, $cu {
-        note "freezing {$cu.&long-name}";
+        note "  freezing {$cu.&long-name}";
         try freeze $path, $cu.&frozen-name;
         .rethrow with $!;
     }

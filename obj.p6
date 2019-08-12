@@ -12,7 +12,7 @@ for @*ARGS {
     my $obj = S/\.moarvm$/.o/;
 
     my @cmd = |<as - -o>, $obj;
-    say @cmd.join(' ');
+    note '  ', @cmd.join(' ');
     
     .in.spurt(qq:to/EOF/, :close) given run :in, @cmd;
             .section .rodata
