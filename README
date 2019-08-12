@@ -1,15 +1,20 @@
 proof of concept for freezing perl6 modules
 
-expected output:
+tested on MinGW64 only, expected output:
 
     $ make
     cat freeze.p6 test.p6 | perl6 -Ilib -
-    freezing Test:auth<perl>:ver<6.d>
-    freezing Foo:auth<?>:ver<?>
-    freezing Foo::Baz:auth<?>:ver<?>
-    freezing Foo::Bar:auth<?>:ver<?>
-    perl6 --target=mbc --output=store.moarvm store.pm
-    cat load.p6 test.p6 | perl6 -
+      freezing Foo:auth<?>:ver<?>
+      freezing Foo::Baz:auth<?>:ver<?>
+      freezing Test:auth<perl>:ver<6.d>
+      freezing Foo::Bar:auth<?>:ver<?>
+    perl6 obj.p6 *.moarvm
+      as - -o auth-perl._T_est.ver-6_21a_d.o
+      as - -o no-auth._F_oo.no-ver.o
+      as - -o no-auth._F_oo_21m21m__B_ar.no-ver.o
+      as - -o no-auth._F_oo_21m21m__B_az.no-ver.o
+    perl6 dll.p6 *.o | gcc -shared -o store.dll *.o -xc -
+    cat dllload.p6 test.p6 | perl6 -
     foo
     bar
     ok 1 -
