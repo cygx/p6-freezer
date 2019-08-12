@@ -16,16 +16,9 @@ for @*ARGS {
     
     .in.spurt(qq:to/EOF/, :close) given run :in, @cmd;
             .section .rodata
-
             .global mbc_{$name}
             .align  8
         mbc_{$name}:
             .incbin "$file"
-        mbcend_{$name}:
-
-            .global mbcsize_{$name}
-            .align  4
-        mbcsize_{$name}:
-            .int    mbcend_{$name} - mbc_{$name}
         EOF
 }
