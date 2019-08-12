@@ -2,7 +2,16 @@ proof of concept for freezing perl6 modules
 
 tested on MinGW64 only, expected output:
 
-    $ make
+    $ make test
+    cat recorder.p6 test.p6 | perl6 -Ilib -
+    perl6 storer.p6
+    perl6 --target=mbc --output=store.moarvm restorer.pm
+    cat load.p6 test.p6 | perl6 -
+    foo
+    bar
+    ok 1 -
+
+    $ make dlltest
     cat freeze.p6 test.p6 | perl6 -Ilib -
       freezing Foo:auth<?>:ver<?>
       freezing Foo::Baz:auth<?>:ver<?>

@@ -2,4 +2,7 @@
 *.moarvm
 *.o
 *.dll
+*.record
+*.index
+*.data
 __*
