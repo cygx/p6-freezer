@@ -1,7 +1,8 @@
 test:
 	cat freeze.p6 test.p6 | perl6 -Ilib -
-	perl6 --target=mbc --output=store.moarvm store.pm
-	cat load.p6 test.p6 | perl6 -
+	perl6 obj.p6 *.moarvm
+	perl6 dll.p6 *.o | gcc -shared -o store.dll *.o -xc -
+	cat dllload.p6 test.p6 | perl6 -
 
 freeze:
 	cat freeze.p6 test.p6 | perl6 -Ilib -
